@@ -1,0 +1,60 @@
+---
+titulo: contacto
+slogan: Mejores granos, mejor café
+---
+<div class="contenedor">
+    <main class="contenido-principal pagina-{{titulo}}">
+        <h2 class="encabezado">Reserva tu <span> Mesa </span></h2>
+       <div class="formulario-reservacion">
+           <form  id="formulario" action="post" method="post" data-abide novalidate>
+               <div class="campo">
+                   <label for="nombre">
+                       Nombre: 
+                       <input type="text" name="nombre" placeholder="Nombre " id="nombre" required>
+                      <span class="form-error">Error!! el nombre no puede ir vacio !</span>
+                   </label>
+               </div>
+               <div class="campo">
+                   <label for="email">
+                       Email: 
+                       <input type="text" name="email" placeholder="email " id="email" required pattern="email">
+                       <span class="form-error">Error!! VAcio o Invalido</span>
+                   </label>
+               </div>
+               <div class="campo">
+                   <label for="para">
+                       Para: 
+                       <select name="numero" id="para">
+                            <option value="1">1 Persona</option>
+                            <option value="2">2 Persona</option>
+                            <option value="3">3 Persona</option>
+                            <option value="4">4 Persona</option>
+                            <option value="5">5 Persona</option>
+                            <option value="6">6 Persona</option>
+                            <option value="7">7 Persona</option>
+                            <option value="8">8 Persona</option>
+                            <option value="9">9 Persona</option>
+                            
+                       </select>
+                   </label>
+               </div>
+               <div class="campo">
+                        <label for="hora">
+                            Hora: 
+                            <input type="time" name="hora" placeholder="18:00 " id="hora">
+                        </label>
+                </div>
+               <div class="campo">
+                        <label for="fecha">
+                            Fecha: 
+                            <input type="date" name="fecha" placeholder="DD/MM/AAAA" id="fecha" required  pattern="date_month_year">
+                        </label>
+                        <span> Fecha no valida o Vacia !!</span>
+                </div>
+               <div class="campo">
+                        <input type="submit", value="Enviar" class="button btn_enviar">
+                </div>
+           </form>
+       </div>
+    </main>
+</div>

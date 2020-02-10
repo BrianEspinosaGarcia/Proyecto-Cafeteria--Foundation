@@ -1,0 +1,93 @@
+.grid-x{
+    background-color: blueviolet;
+}
+
+.cell{
+    background-color: red;
+}
+
+// Semantico Alinear hijos 
+
+.contenedor {
+    @include xy-grid-container();
+    .contenido-principal {
+        @include xy-grid();
+        background-color: brown;
+        height: 600px;
+
+        //El primer parametro es para X con valores  spaced justify, left, right, center, spaced etc
+        // el segundo parametro es para  Y con valores como bottom, top, middle
+        @include flex-align(spaced, stretch);
+
+        .noticia {
+            @include xy-cell(4);
+            color: white;
+            background-color: cornflowerblue;
+        }
+    }
+}
+
+.contenedor-self{
+    @include xy-grid-container();
+    .contenido-principal{
+        @include xy-grid();
+        background-color: brown;
+        height: 600px;
+        color: white;
+        .noticia-principal{
+            @include xy-cell();
+            background-color: cornflowerblue;
+            //Este solo es para alinear la parte vertical
+            @include flex-align-self(top);
+            @include flex-order(1);
+        }
+        .noticia{
+            
+            @include xy-cell();
+            @include flex-align-self(middle);
+            background-color: green;
+        }
+    }
+}
+
+
+/* MIXINS */
+.menu-responsive {
+    // Este mixin te permite construir un menu hamburgesa
+    @include hamburger(black, red, 50px, 40px, 7px, 4);
+}
+.centrar-elemento {
+    height: 300px;
+    background-color: cornflowerblue;
+    position: relative;
+    p{
+        font-size: 50px;
+       /*  @include vertical-center(); PAra centrar verticalmente
+        @include horizontal-center(); PAra centrar elemento  */
+        @include absolute-center();
+    }
+}
+.caja {
+    @include box(200px, 200px);
+    background-color: burlywood;
+
+}
+.registro-exitoso{
+    height: 50px;
+    @include bordered(2px, dashed, green);
+    position: relative;
+    p{
+        @include absolute-center();
+    }
+}
+
+.position {
+    @include position(relative);
+    height: 300px;
+    background-color: fuchsia;
+    .contenido{
+        @include position(absolute, 10,0,0,0);
+        background-color: red;
+        height: 20px;
+    }
+}

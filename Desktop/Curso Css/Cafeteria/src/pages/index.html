@@ -1,0 +1,85 @@
+---
+titulo: inicio
+slogan: Disfruta una deliciosa taza de cafe
+---
+
+---
+titulo: nosotros
+slogan: Una nueva experiencia cada dia
+---
+<div class="contenedor">
+    <main class="contenido-principal pagina-{{titulo}}">
+        <h2 class="encabezado">Conoce mas <span>Sobre nosotros</span></h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt accusamus tempora, dicta temporibus beatae itaque perspiciatis quo ratione, sed distinctio facilis. Perferendis voluptas quos ratione fugiat, veritatis odio cupiditate ipsum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga consectetur sit impedit similique eos at sapiente minima iusto voluptates alias possimus porro sequi, exercitationem, ipsum odit aliquam dolorum earum perferendis!</p>
+        <div class="categoria-iconos">
+            <div class="icono cafe">
+                <h3>Café</h3>
+            </div>
+            <div class="icono postres">
+                <h3>Postres</h3>
+            </div>
+            <div class="icono te">
+                <h3>Te</h3>
+            </div>
+        </div><!-- Categoria Iconos -->
+
+    {{>nuestra_galeria}}
+
+    </main>
+</div>
+
+    {{>nuestro_menu}}
+
+<div class="contenedor contenido-principal">
+    <h2 class="encabezado">Lo que dicen nuestros clientes <span>Testimoniales</span></h2>
+
+    <div class="contenedor-slider">
+        <div class="orbit" role="region" aria-label="Testimoniales" data-orbit data-options="animInFromLeft: fade-in; animInFromRight: fade-in;  animOutToLeft:fade-out; animOutToRight:fade-out;">
+            <div class="orbit-controls">
+                <button class="orbit-previous"><span class="show-for-sr">Anterior</span>&#9664;&#xFE0e;</button>
+                <button class="orbit-next"><span class="show-for-sr">Siguiente</span>&#9654;&#xFE0e;</button>
+                
+            </div>
+            <ul class="orbit-container">
+                <li class="is-active orbit-slide">
+                    <div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil blanditiis, dolor commodi accusantium assumenda cupiditate labore asperiores cum natus a corrupti ullam iusto deserunt illum veniam! Officiis, aliquam quidem! Recusandae.
+                        </p>
+                        <h3> Escrito por Daniel Espinosa Garcia</h3>
+                    </div>
+                </li>
+                <li class=" orbit-slide">
+                    <div>
+                        <p>
+                            Este es el segundo texto Slider con la opinion de otro cliente Satisfecho ....
+                        </p>
+                        <h3> Escrito por Nikola Tesla </h3>
+                    </div>
+                </li>
+                <li class=" orbit-slide">
+                    <div>
+                        <p>
+                            Este es el tercer comentario de opinion Favorable para la pagina de Cafe, 
+                            externando el agradecimiento por el trato brindado y la atencion otorgada 
+                            a las personas en una reunion
+                        </p>
+                        <h3> Escrito por Brianda Duana </h3>
+                    </div>
+                </li>
+                <li class=" orbit-slide">
+                    <div>
+                        <p>
+                            Como ultimo comenzal, opina una vista diferente dado que requiere una 
+                            critica mas precisa en los alimentos para degustar de ellos y emitir 
+                            un juicio controlado y justo
+                        </p>
+                        <h3> Escrito por El Chef Oropeza</h3>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+</div>
