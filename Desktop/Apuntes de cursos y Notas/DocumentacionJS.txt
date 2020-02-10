@@ -1,0 +1,14 @@
+Documentacion en JS
+Para meter algo de documentacionen Js requiero colocar dos asteriscos padocumentar
+ /**   Documentacion */
+Para indicar un metodo especifico descriptor como un Constructor, se usa
+@constructor
+Otro ejemplo para mostrar como en una funcion se documenta es asi :
+/**
+ * Represents a book.
+ * @constructor
+ * @param {string} title - The title of the book.
+ * @param {string} author - The author of the book.
+ */
+function Book(title, author) {
+}

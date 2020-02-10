@@ -1,0 +1,18 @@
+Apuntes de Lit Element 
+Cuando en mi etiqueta de mi  elemeto que acabo de crear quiero agregarle o pasarle un valor a un 
+atributo hay dos formas
+<myElement  nombre = " SOLO STRINGS "></myElement>
+pero ahi solo puedo enviar strings
+Aunque para enviar cualquier tipo de datos es:
+<myElement  .nombre = " Cualquier tipo de dato  "></myElement>
+
+
+
+PAra comenzar un componente y no desde 0 
+HAy un npm que se llama catsys que te permite generar componentes mas rapido como ayuda 
+de cli que te ayuda a generar componentes super rapido con todo lo que se requiera realizar
+
+generar un componente 
+npm i -g catsys-cli
+Para agregar con que procesador agregar el estilo y crear el componente con el nombre
+catsys component:create ib-employee-register-form --styles sass

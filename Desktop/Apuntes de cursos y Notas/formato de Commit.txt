@@ -1,0 +1,24 @@
+Forma de un commit
+
+refactor:  add data structure files
+
+body: In this save the data structure files are incompletely loaded, only the stack and queue
+
+ footer: incomplete state
+Repositorios de prueba
+
+
+https://github.com/BrianEspinosaGarcia/Entregables.git
+
+
+feat(my-file.html): decription
+
+Archivos de Checar:
+https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Classes
+}https://codigofacilito.com/articulos/buenas-practicas-en-commits-de-git
+https://medium.com/codingthesmartway-com-blog/create-a-rest-api-with-json-server-36da8680136d
+https://codeburst.io/useful-javascript-array-and-object-methods-6c7971d93230
+https://medium.com/better-programming/what-is-the-difference-between-for-in-and-for-of-in-javascript-650952654e97
+https://medium.com/noders/estructuras-de-datos-con-javascript-parte-1-pilas-stacks-5a2092cff16a
+
+https://app.slack.com/client/TR5QBU0SY/DR8ENBBUN

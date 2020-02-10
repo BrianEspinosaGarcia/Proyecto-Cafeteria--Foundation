@@ -1,0 +1,40 @@
+1.)   perro gato caballo vaca.
+2.)   for in for of forEach map for clasico 
+3.) then / catch resolve - reject
+4.) array.length
+5) el cuadrado de un numero Una funcion  con ECMA S6 con arrow function 
+6.) Error por que const no se puede reasignar un valor.
+7)  true.
+8)   Alfa Beta Gamma Lambda
+9)  Undefined *******
+10) PAra el alcance de variables // Scope para limitar el alcance de una variable
+
+POO 
+11) Herencia, Polomorfismo, encapsulamiento, Sobrecarga, sobreescritura, Implementacion  Interfaz 
+12) Bajo acoplamiento.
+13) LA capacidad de un elemento para poder ejecutar ciertos metodos que no le pertenecen
+directamente a el, pero tiene la capacidad de realizarlos  Upcasting-Downcasting
+14) La capacidad de reutilizar codigo en clases descendientes, donde le pasan atributos y metodos que la clase hija podria ocupar
+15) cohesion
+16) Herencia Multiple / Herencia
+17) HErencia Multiple
+18)  Encapsulamiento
+19) El modelo
+20) Constructor
+
+LIT ELEMENT 
+21) @evento
+22) atributo = "${this.propiedad/metodo}"// ?hidden = "${this.propiedad}" // .propiedad="${this.propiedad}"(Cualquier tipo de datos)
+23) updated()
+24) get properties()
+25) updatedFirst() //updatedStart() updatedFirstTime() 
+26) updatedFirst() //updatedStart() updatedFirstTime() FirstUpdated()
+27) dispatchEvent( new customEvent( 'nombre', { details: 'cosas'}));
+28) render() html```
+29) extends LitElement 
+30) return css``; get styles  
+
+
+
+
+

@@ -1,0 +1,108 @@
+ LIBRERIA DE ( 'lit-html' )
+******~~~~~~~******~~~~******~~~~~~
+Es una libreria de JavaScript que permite una plantilla de HTML
+Las principales APIs para el renderizado del template  son : 
+ ---> html :() Plantilla usada para escribir plantillas.
+  -->render() Funcion usada para renderizar una plantilla al contenedor del DOM.
+
+Puedes crear variables en las que se definan  otros trozos de plantilla y despues renderizarlos en el metodo 
+[ html ] el cual descomprime las variables  insertandolas como etiquetas
+
+->Se puede descomprimir un arreglo o  objeto simplemente colocandolo dentro de ${binding} donde se recomienda
+   que el elemeto ya venga con un map que le haya dado la estructura por dentro de un html.
+
+*] Metodos para recorrer un arreglo:
+  ->Aparte de recorrer un arreglo con una simple funcion MAP se puede de la siguiente forma.
+ ->Se puede tambien recorrer algo con lo siguiente:
+***************
+  const employeeList = (employees) => html`
+  <ul>
+    ${repeat(employees, (employee) => employee.id, (employee, index) => html`
+      <li>${index}: ${employee.familyName}, ${employee.givenName}</li>
+    `)}
+  </ul>
+`;
+
+******************
+
+   ***] Palabra [* nothing *]
+  Esta palabra debe importarse dentro de la libreria de lit-html de la siguiente forma
+  import {nothing, html} from 'lit-html';
+  Permite que en una plantilla medinate esa palabra no renderice ese pedazo o parte de codigo
+
+ *] DEFINICION DE UNA DIRECTIVA:
+ 
+  Las directivas son funciones que pueden modificarse como [ lit-html ] renderiza valores. Los autores 
+ de las plantillas pueden usar directivas en sus directicas como otras funciones.
+
+
+*] Definicion de un nodo de donde se creara nuestro elemento....
+
+  import {NodePart, createMarker} from 'lit-html';
+
+  // Create a new part, passing in the render options from the original part
+      const newPart = new NodePart(containerPart.options);
+
+   // Create markers surrounding content managed by the new part
+    const container = containerPart.startNode.parentNode;
+    const startNode = createMarker();
+    container.insertBefore(startNode, containerPart.endNode);
+    container.insertBefore(createMarker(), containerPart.endNode);
+
+     newPart.insertAfterNode(startNode);
+
+*******************
+*] METODO [ ifDefined ]
+  Este metodo pregunta que si el valor es definido entonces lo coloca y de lo contrario entonces 
+  lo remueve, como ejemplo esta lo siguiente:
+  ******
+
+   import {ifDefined} from 'lit-html/directives/if-defined';
+
+    const myTemplate = () => html`
+    <img src="/images/${ifDefined(image.filename)}">
+      `;
+***********
+
+*] METODO [ repeat ]
+
+ Este metodo permite recorrer un array o un objeto donde es como un ciclo que te permite 
+enviar datos y se inserta solo en textos, pero considerando que puedes tener control de hasta 
+donde quieres que termine de imprimir dependiendo de los parametros que mandes, existen dod
+formas en las que puedes manipular estos datos o bien recorrerlo:
+   repeat(items, keyfn, template)
+    repeat(items, template)
+**** Donde la diferencia es que uno recorre todo mientras que el otro  puedes colocar un fin de la repeticion
+ Ejemplo______________
+
+import {repeat} from 'lit-html/directives/repeat';
+
+const myTemplate = () => html`
+  <ul>
+    ${repeat(items, (i) => i.id, (i, index) => html`
+      <li>${index}: ${i.name}</li>`)}
+  </ul>
+`;
+______________--------
+
+*] Metodo [ unsafeHTML ] 
+ Es un metodo que al igual que CSS permite zanitizar el codigo que pudiera 
+inyectar en alguna circunstancia alguna infeccion a mi codigo, por lo cual este metodo 
+tambien aplica de igual forma cuando tenemos duda que pudiera tener de la siguiente forma.
+     ${unsafeHTML(markup)}
+
+*] MEtodo [ until ( .... values) ]
+Este metodo puede incluso incluir hasta promesas, lo que agrega que este metodo tenga una prioridad 
+de renderizado de los elementos, donde si bien si tubiera promesas entonces sin importar cada una de
+ellas, las ejecturaria en orden y las esperaria hasta que cada una de ellas fuera ejecutada para seguir con las
+demas, como ejemplo esta lo siguiente:
+Ejemplo ________________________________
+
+import {until} from 'lit-html/directives/until.js';
+
+const content = fetch('./content.txt').then(r => r.text());
+
+html`${until(content, html`<span>Loading...</span>`)}`
+______________________________________
+
+

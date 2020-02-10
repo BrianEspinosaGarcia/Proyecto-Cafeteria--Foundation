@@ -1,0 +1,541 @@
+Apuntes Lit Element:
++]Formas de agregar datos a una plantilla de html:
+
+    Text content: <p>${...}</p>
+    Attribute: <p id="${...}"></p>
+    Boolean attribute: ?disabled="${...}"
+    Property: .value="${...}"
+    Event handler: @event="${...}"
+
+
++] para definir una etiqueta ;
+  --customElement.define('nombre-etiqueta', ClaseQDefine);
+
++]// Definir como agregar decoradores de TS y propiedades.
+
+*]Insertar hijos( Renderizar hijos)
+ ---Para que una etiqueta pueda renderizar elementos, dentro del render y la template  se debe
+     agregar la etiqueta <slot></slot> para que este pueda recibir elementos 
+ Como ejemplo y para que sea mas especifico a cada cual se le aplicara cada detalle este se puede 
+ especificar con el atributo name  dentro del slot asi :}
+render(){
+  return html`
+    <div>
+      <slot name="one"></slot>
+    </div>
+  `;
+}
+// Dentro de html:
+  <my-element>
+  <p slot="one">Include me in slot "one".</p>
+</my-element>
+
+*]  Otra forma de importar un elemento a Html
+   <script type="module" src="./my-element.js"></script>
+
+*]Crear una ruta diferente a la preestablecida (shadowRoot)  //Quitar ShadowRoot//
+--- Para cambiar el nodo en el cual se va a renderizar, se debe ocupar el metodo(**createRenderRoot**)
+     ejemplo del metodo: 
+  createRenderRoot() {
+  /**
+   * Render template without shadow DOM. Note that shadow DOM features like 
+   * encapsulated CSS and slots are unavailable.
+   */
+    return this;
+  }
+ ***** Nota importante: Al utilizar esto  el encapsulamiento del css no esta disponible
+
+*] ¿Para que sirve el metodo static get properties?
+
+*]  Los estilos dentro de nuestro componente estan aislados de los demas, es una de las ventajas que proporciona
+     el shadowDoom+
+
+*]Para usar estilos a mi componente,  se debe importar en la parte de arriba la clase css y usar el metodo
+   (static get styles() ) en el cual dentro del metodo debes retornar css ``;
+
+*] El render es para el html y el static get styles() es para el css.
+
+*] Dentro de ( static get styles()  ) se puede retornar un solo css `` o bien se puede un arreglo de css de la siguiente forma
+     return [ css ``,  css``, css`` ...  ]
+
+*]  Dentro de los estilos tambien puedo hacerle binding a las propiedades dentro del return css // estas propiedades
+  que son almacenadas en variables, son establecidas dentro del  metodo (static get styles ) pero usando el metodo : 
+ (unsafeCSS(variableCssDentroDelMetodo)) o bien definirlas dentro de la clase como propiedad y no usar el metodo
+mencionado anteriormente.
+****> Nota ese metodo es sumamente importante para seguridad de la app ya que hay vulnerabilidades por css***>
+
+*] Heredar Estilos:
+ ++++) Se pueden heredar estilos  de donde se desciende de otro elemento de la siguiente forma:
+ return[ 
+         super.styles , 
+         css `....`
+ ];
+---- Esto va dentro del (static get properties del elemento hijo)
+---- Recordar que el elemento hijo debe extender de un elemento SuperPAdre que hereda sus cosas
+
+*]   Checar el selector de host por que no lo entendi
+ --- (:host) y ( :host(selector)) son metodos para css que hace que salgan de el ShadowDom para que 
+      sean manipulados externamente y el scope se vea alcanzado hasta el ligth DOM y asi modificarlo 
+     desde afuera, por lo cual se recomienda que las propiedades agregadas en el ( :host) este  vien pensado
+    para que no afecten demasiado, un ejemplo de seleccion de un atributo es:
+  ++++
+        :host { 
+      display: block; 
+    }
+ ++++++++
+Lo que permite que en estilos en el ligth DOM se cambie esta propiedad asi : 
+    my-element {
+  display: inline-block;
+}
++++++++++
++] Para renderizar elementos o etiquetas insertadas fuera en el ligth dom, permitiendo su integracion 
+     mediante <slot></slot> esta se selecciona con el siguiente pseudo Selector
+   ( ::slotted(*) ) Encontrando que todas las ranuras insertadas se les agregara los estilos que estaran 
+                         entre sus llaves.
+   ( ::slotted( 'etiquetaPosibleAIncrustar' ) Este selecciona todas las etiquetas insertadas con la etiqueta 
+                 especificada entre el parentesis ''
+   ( p ::slotted(*) ) Primero busca todos las p que tengan ranuras <slot> y a esas les aplica los estilos
+*** Al aplicar estas estiquetas tambien abre el scope y hace que se puedan editar los estilos fuera del 
+     shadow DOM
+
+*] Permitir estilos desde el Ligth DOM
+ --- Primero desde dentro del componete debemos seleccionar todo el componete y darle libertad de scope
+      para que se pueda acceder desde el ligth dom, con la etiqueta (:host), como lo siguiente
++++++++++
+  static get styles() {
+  return css`
+    :host { color: var(--themeColor); }
+  `;
+} 
+********* mientras que en el ligth DOM:
+<style>
+  html { 
+    --themeColor: #123456;
+  }
+</style>
+***********
+ De esa forma la variable creada en el ligth DOM accede al shadowDOM y puede asignarse como variable a css
+
+*] Otra forma de agregar estilos de CSS es desde el mismo render() de html pero dentro de los backticks se debe
+    agregar una etiqueta como en el html normal ( <style></style> )
+
+*]Otra forma para agregar una hoja de estilos a mi documento es insertarla dentro de un <link rel..>  
+   dentro de mi render () como si fuera en html
+
+*]AQUI QUEDA PENDIENTE PARA MAS COSAS DE ESTILOS DE ELEMENTOS
+
+
+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/
++/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/+/
+  <-><EVENTOS><->
+
+*]    Para agregar eventos se puede hacer dentro de la creacion de etiquetas en el metodo render()  como ejemplo_
+   ++++++
+  render() {
+  	return html`<button @click="${this.handleClick}">`;
+  }  
+***** Estos eventos se colocan cuado queramos que haya una interaccion con otros elementos o cuando se haga una
+     accion determinada con eventos que ya conocemos y que estan por defecto en los navegadores.
+
+*] Hay otra forma en la que se pueden agregar eventos y esta es dentro del constructor-
+   --- En esta forma se agrega un escuchador de eventos, que si bien puede haber sido creado por nosotros o que 
+        este siendo lanzado por otro componente, permite que al agregar o insertarse ese elemento el mismo constructor
+      lo escuche y haga determinadas acciones con ello.
+ejemplo: 
+++++++++
+      constructor() {
+          super();
+          this.addEventListener('DOMContentLoaded', this.handleLoaded);
+        }
+*/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/*
+    Aqui  al declarar un evento dentro de mi constructor,  el evento cada que se haga 
+    una accion dentro de mi componente entero, lo estara escuchando toda la etiqueta host
+   =>  no es necesario definir un lanzador de eventos mas para que lo escuche el constructor,
+          con que la accion se haga sobre todo el componente como un click o cosas asi, este eventi
+        se estara ejecutando iterativamente.
+*/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/**/*
+*] Otro lugar para agregar eventos es en el metodo (firstUpdated)
+    Es importante recordar que este surge como complemento o suplemento a sustituir un evento en el constructor, 
+   dado que si no se da tiempo a ejecutar el evento en ese lugar, entonces se tendria que colocar el evento dentro de 
+   ( firstUpdated ) ya que en este si permite una ejecucion del evento mas grande.
+
+*] Otro lugar para añadir un evento es dentro de la funcion [  connectedCallback ] 
+    En este caso surge cuando queremos escuchar un evento ya sea para iniciar la aplicacion o bien 
+   que requiere estar escuchando el mismo o varios eventos dentro de varias partes exepto en si mismo
+   entonces el evento se agrega en esta funcion del ciclo de vida.
+    ***Como nota estos eventos que escucha son solo dentro del componente y no tiene nada que ver con elementos 
+         secundarios como el Window o el Document *****
+   ---***+++Siempre es importante eliminar eventos en el [ disconnectedCallback ] ya que pemite liberar memoria
+        una vez que es desconectado o destruido el elemento
+. IMPORTANTE ; El colocar un escuchador de eventos o disparador de eventos dentro del  [connectedCallback ] a 
+          comparacion del constructor es que este siempre se disparara al conectarse de nuevo las veces que sean necesarias
+    Ejemplo de agregar un escuchador de eventos en  [ connectedCallback ]
+  +++++++++++
+connectedCallback() {
+        super.connectedCallback();   ******Esto es parte de instanciar el metodo****
+       document.addEventListener('readystatechange', this.handleChange);
+}
++++++++++++++++
+   Ejemplo de agregar un destructor de eventos en una funcion  [ disconnectedCallback ]
+   disconnectedCallback() {
+      document.removeEventListener('readystatechange', this.handleChange);
+      super.disconnectedCallback();   *****Esto es parte de instanciar el metodo****
+   }
+
+*] Disparar un nuevo evento y creacion de este:
+     
+let event = new CustomEvent( 'nombre-evento', {
+   detail: {
+      message: 'Aqui meto informacion o cosas a enviar
+     } });
+ this.dispatchEvent( event ); ->Dispara el evento
+//*//+//*//+//
+Por defecto al disparar un nuevo evento este burbujea, lo que hace posible escucharlo en 
+otros lugares de mi elemento. 
+Si quiero que mi evento burbujeee hasta el Ligth DOM y pase mas aya de la raiz de mi elemento
+entonces debo activar las burbujas en mi creacion del evento y activar el composed para enviar
+la composicion de este :
+
+  firstUpdated(changedProperties) {
+       let myEvent = new CustomEvent('my-event', { 
+            detail: { message: 'my-event happened.' },
+            bubbles: true, 
+            composed: true });
+       this.dispatchEvent(myEvent);
+    }
+
+//*//+//*//+//
+
+*]Disparar un evento actualizador
+ Se puede insertar dentro del metodo [ updated ( changeProperties ) ]
+   En el cual se instancia un metodo que permita actualizar o ejercer cambios sobre algo 
+
+////+/+/+/+/**//++//++//+++//++++//
+Forma de agregar un evento sobre una etiqueta ::
+ *) <my-element onClick="(e) => console.log(e.target)"></my-element>
+   De esta forma ya puedo quitar el @ y asi funciona
+
+
+*]Saber de donde se dispara un evento: 
+ Cuando se manejan varios eventos dentro de un elemento, es recomendable antes de iniciar 
+la manipulacion o control de este, saber de donde viene cada evento por lo que se puede averiguar
+de la siguiente forma: 
+***
+   handleMyEvent(event) {
+  	console.log('Origin: ', event.composedPath()[0]);
+    }
++*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***   +*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***
+ESTE LO TENGO QUE PROBAR HA VER COMO FUNCIONA
++*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***  +*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***
+
+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|+*|
+</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-
+ Repaso de Seccion de Propiedades :
+
+[**] PROPIEDADES DE OPCIONES [**]
+  Estas son las opciones de la declaracion de propiedades:
+
+     converter: Convert between properties and attributes.
+     type:  Se coloca el tipo del cual se especifica recibir su valor
+     attribute:  Permite modificar o poder colocar un sobrenombre para manipular la propiedad
+     reflect: Configure reflected attributes.
+     noAccessor: Whether to set up a default property accessor.
+     hasChanged: Specify what constitutes a property change.
++*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***   +*+*+*+*+*+*+*++*+*+*+*+*+*+*+*+*+*+*+*+*+++**+++*+****+***   +*+*+*+*+*+*+*+
+
+*)/() Importante:  todas estas declaraciones se pueden especificar sobre un [ static get properties() ]
+   --- Importante considerar que en este metodo mencionado se debe retornar un "  {   } " con todas las 
+        propiedades con sus opciones.
+  --- Para inicializar propiedades estas se instancian dentro del constructor de la clase.
+  --- Es necesario instanciar dentro del constructor [ super() ] de lo contrario no renderizara nada
+ --- la propiedad [ reflect ] ( Establece un atributo desde una propiedad ) el valor debe cambiarse a un String
+    ejemplo de uso de reflect:
+      prop1: { type: String, reflect: true }
+
+    => Cuando se aplico el reflected, hace que el valor que se este metiendo desde una propiedad, sea establecido
+       en un atributo de la etiqueta del html, es decir donde fue declarada mi etiqueta, por lo que al 
+       alterar esa propiedad, los cambios se veran [ reflejados ] hacia el atributo que este declarado del HTML 
+
+*] Metodo [ getAttribute( 'nombrePropiedad'  )] 
+   --- Este metodo se atrae lo que esta siendo insertado dentro de la instancia de mi etiqueta, es decir al momento
+        de su declaracion, esto es diferente a this.propiedad ya que ahi obtienes cualquir tipo de dato, mientras que 
+       con ese metodo obtienes strings dependiendo del reflect si esta activo o no.
+
+*] Metodo [ setAttribute( 'nombrePropiedad', establecer valor a la propiedad ]
+   Este metodo permite agregar o establecer atributos a las propiedades podiendo hacer el cambio
+   ***Recordar que una propiedad siempre debe estar en String,  por lo que es requerido pasarlo 
+       de esa forma***
+*] Opcion [ converter ] dentro de una propiedad.
+   Esta opcion agregada dentro de la definicion de una propiedad en el metodo [ static get properties() ]
+   funciona como una propiedad customizable que permite hacer el casting a cualquier cosa recibida,  
+   para transformarlo en el tipo de dato que nosotros requiramos.
+    Esta propiedad puede ser un objeto o funcion, **Si es un objeto se define de la siguiente forma**:
+    ejemplo : +++++++++
+NOTA : se puede evitar el parametro 'type' es como ilustracion******
+      converter: { 
+                fromAttribute: (value, type) => { 
+               // `value` is a string
+             // Convert it to a value of type `type` and return it
+           },
+               toAttribute: (value, type) => { 
+               // `value` is of type `type` 
+             // Convert it to a string and return it
+          }
+  }
+
+++++++++++++++++++
+ Ejemplo de cuando se define una funcion dentro de un converter:
+    converter: (value, type) => { 
+    	// `value` is a string
+    	// Convert it to a value of type `type` and return it
+     }
+++++++++++++++++++
+
+
+*] [ attibuteChangedCallback  (name, oldval, newval) ]
+  Es una funcion que esta al tanto de los atributos o propiedades en especial cuando son pasados como 
+  atributos, ya que esta al pendiente de cualquier cambio. 
+ ---- Recordar que al ejecutarse tal funcion  establece el valor de la propiedad utilizando la funcion 
+       definida  [ fromAttribute ]
+   ejemplo:    ++++++
+     
+    attributeChangedCallback(name, oldval, newval) {
+           super.attributeChangedCallback(name, oldval, newval);
+        }
+
+
+++++++++
+
+
+*] Opcion [ attribute: ]
+  Esta crea un observable con diferente nombre, el cual sirve para referirse a el en cuanto se crea una
+  etiqueta nueva, ( es como otra forma de referir a la propiedad ).
+  Si se desea evitar una  creacion de un nuevo atributo, entonces esta propiedad se establece en 
+  ***false ***( Al colocar esto en falso los cambios en los atributos no la afectaran.)
+    
+
+*]  Metodo [requestUpdate () ]
+  Este metodo una vez que ha sido establecida o cambiada una propiedad este obliga a una actualizacion 
+  de los elementos.  
+ejemplo:     
+      requestUpdate()
+ 
+PEro tambien puedo actualizar una propiedad de esta forma : 
+    this.requestUpdate('myProp', oldValue); Mandando en parametro la que quiero actualizar.
+
+*] Cada Setter que yo escriba para  cada propiedad debe invocar dentro del metodo al metodo
+     [ requestUpdate('nameProperty', oldValue) ] con el nombre de la propiedad como primer 
+     parametro y con el valor viejo para que actualice y obligue a una actualizacion y por ende el renderizado.
+ ejemplo +++++++++
+     set prop(val) {
+          let oldVal = this._prop;
+           this._prop = Math.floor(val);
+          this.requestUpdate('prop', oldVal);
+     }
++++++++
+
+*] HERENCIA EN COMPONENTES:
+    Si queremos que un atributo  de una superclase o supercomponente NO tenga cambios en sus descendientes
+    entonces debo establecer dentro de la propiedad    [" noAccessor: true "]
+
+*] METODO [ hasChanges () ]
+   Todas las propiedades al ser  declaradas tienen un metodo llamado hasChanges() el cual es llamado cada
+  que la propiedad es establecida.
+----Este metodo compara la propiedad con su valor viejo con el nuevo y si hay un cambio entonces retorna el 
+      true, el cual envia una actualizacion 
+ ---*Podemos editar el metodo hasChanges() el cual se puede sobreescribir dentro de una de las caracteristicas 
+       de la propiedad como otra caracteristica y escribir para que compare lo que elijamos.
+
+</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-</>]-
+
+--><-->---<---->LIFECYCLE<---><---><<->-----------------------------------------------------------------------------------
+
+La actualizacion de los componentes es de forma asincrona siempre en respuesta a la propiedad observada en un 
+cambio.
+A gran  nivel la actualizacion del cilclo de vida es:
+   1> La propiedad es establecida.+
+   2> Checa si la propiedad necesita una actualizacion, de ser asi la solicita.
+  3> En la union de la actualizacion
+       --->Procesa las propiedades y atributos.
+      ----> Renderiza el elemento.
+   4> Resuelve una promesa, indicando si la actualizacion es completa.
+
+ *)] METODOS HEREDADOS DE WEB COMPONENTS:
+
+*] connectedCallback : Ejecutado o invocado cuando un componente es agregado al DOM
+*]  disconnectedCallback: Ejecutado cuando un componente es removido del DOM
+*] adoptedCallback : Ejecutado cuando un componente es movido a un nuevo documento.
+*] attributeChangedCallback: Ejecutado cuando el atributo de un componente tiene cambios.
+
+/\/\/\/\/\/\ TODOS ESTOS METODOS REQUIEREN UNA LLAMADA AL METODO PADRE /\/\/\/\/\/\
+
+***super.connectedCallback() ***
+***super.disconnectedCallback()***
+***super.adoptedCallback()****
+....
+
+~~~/~~~/ USO DE **ASYNC*** AWAIT*****~~~~~/~~~/
+Usando el [ async ] en una funcion hace que este genere una promesa y al hacer esto te permite 
+usar el [ await ], esto permite que esperemos la promesa que genera [ updateComplete ] 
+de esta forma: 
+  ***********
+   async myFunc ( data ) {
+     this.myProp= data;
+
+   await this.updateComplete;
+   
+  }
+ ********
+*] someProperty.hasChanged  
+   Todas las propiedades tienen una funcion ( has changed ), la cual es llamada cada que la propiedad 
+  es establecida, si esta retorna true entonces lanza una actualizacion.
+
+*] requestUpdate () 
+   De esta forma inicializamos manualmente el inicio de una actualizacion.
+   ********
+   this.requestUpdate();
+ Si bien podemos actualizae una propiedad sin el metodo set:
+     ....this.requestUpdate(propertyName, oldValue);
+ *****EL metodo cambia la propiedad pero no lanza un update.
+
+*] NOTA Importante cada que establezcamos una propiedad con un tipo de metodo ( set ) 
+    es importante disparar un evento de actualizacion sobre el mismo elemento o atributo.
+
+*]NOTA al establecer un get/set de una propiedad con el mismo nombre que la propiedad, 
+   hace que se ejecuten cada que la propiedad es invocada, mostrada o mandada a llamar como 
+     ${this.propiedad}  o bien cuando la propiedad es cambiada se ejecutaria el metodo set de dicha 
+   propiedad, como ejemplo $ {this.propiedad = 43}
+
+*] METODO [ performUpdate ]
+   Este metodo por  default es programado como una microtareaa despues del fin 
+   o inicio de la siguiente ejecucion, pero si bien se puede reescribir el comportamiento 
+  de dicho metodo para que se ejecuten ciertas cosas antes de que sean actualizadas o
+  o despues, dependiendo sea el caso, sin olvidar que se debe de llamar el metodo 
+  [ super.performUpdate () ] al final de la sobreescritura del metodo.
+     **********
+     async performUpdate() {
+         console.log('Requesting animation frame...');
+         await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+         console.log('Got animation frame. Performing update');
+         super.performUpdate();
+      }
+ ************
+*]  METODO [ shouldUpdate (changedProperties) ]
+    Controla si una actualizacion debe procesarse o no. 
+--- Al implementar esta funcion permite especificar cual  propiedad 
+    deberia cambiar. Por default este metodo regresa true.
+---- Los parametros que tiene el metodo 
+      -->changeProperties Es un tipo de dato Map donde las llaves (Keys) son los cambios
+            de la propiedad y los valores son los correspondientes valores pasados.
+      -->Retorna true si la actualizacion procede.
+    --> Este metodo si dispara un evento actualizador.
+    -->En este metodo dentro al recorrer el Map [ changedProperties ] se debe indicar que 
+         propiedad es la que se decea actualizar con este bloque de codigo como ejemplo: 
+~~~~~~~~***************
+/**
+   * Only update element if prop1 changed.
+   */
+  shouldUpdate(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      console.log(`${propName} changed. oldValue: ${oldValue}`);
+    });
+    return changedProperties.has('prop1');
+  }
+
+~~~~~~~~~~~~*********
+
+*]METODO  [ update() // posible parametro changedProperties ]
+
+  --> Este metodo no manda una actualizacion
+  --> Este metodo refleja los valores nuevos de los atributos y manda a llamar render() del 
+        renderizado del DOM via lit-elemet ( solo provee una referencia del metodo y no permite 
+       sobreescribirlo)
+  -->En el metodo update solo actualizara la propiedad si es que esta en el [ static get properties() ]
+      y en el [ constructor() ] si no esta en ambos no se puede cambiar la propiedad y por lo cual no se 
+     renderiza  ni se muestra.
+
+
+*]METODO [ render() ]
+
+  --> Se puede sobreescribir el metodo o su  comportamiento.
+  -->Regresa una plantilla resultante ( TemplateResult ) de lit-html
+  -->Este metodo cambia las propiedades mostrandolas en el render, mas no dispara un 
+      elemento update.
+   --> Este metodo manda a llamar el metodo render del DOM de la clase lit-html
+
+[++MEtodo [ firstUpdated(changedProperties) ] ] 
+
+ --> Es un metodo que se ejecuta una vez que su primer actualizacion del componente se ha 
+        realizado, y procesado        
+ -->Este elemento si manda un evento de actualizacion.
+---> Este es llamado despues de que el elemento DOM ha sido actualizado por primera vez,
+       inmediatamente despues del metodo [ updated() ] es llamado.
+--->Este elemento trabaja despues de que la plantilla ha sido creada
+
+*] METODO [ updated( changedProperties)  ]
+  -->Este si lanza una actualizacion con las propiedades que cambiaron
+ -->Llamado cuando los elementos del DOM han sido actualizados y renderizados
+ -->Se puede sobreescribir el comportamiento de este despues de una actualizacion.
+ -->COn este se hace algo despues de cada actualizacion.
+
+*]  METODO [ updateComplete ] 
+--> Cuando quiero hacer algo despues de que el elemento ha sido actualizado
+ -->El metodo genera por si solo una promesa.
+-->Por ello se debe esperar como promesa o respuesta de ella con un wait.
+-->Resuelve con un Boolean cuando el elemento ha sido terminado (Promesa)
+-->True si no hay pendientes actualizaciones.
+-->false si no hay una actualizacion pendiente disparada en el ciclode Vida.
+-->Esta promesa se  resuelve cuando el elemento ha terminado su actualizacion.
+-->El uso de updateComplete es para esperar una actualizacion.
+Ejemplo: ---->
+   await   this.updateComplete;
+    // Lineas de codigo a hacer esperando la promesa.
+~~~~~ Otra forma : 
+   this.updateComplete.then(() => { /* Hacer o insertar ciertas acciones */ });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+*+/+^<>^+^<>^+^<>^+^<>^+^<>^+^<>^+^<>^+^<>^+^<>^+^<>^
+hasChanged(newValue, oldValue) ES UN HOOK
+->este metodo si retorna un true entonces se manda al parametro [ changedProperties ] con el valor 
+de la actualizacion adecuada, por que si retorna un valor entonces no se actualiza la propiedad.
+-> Si el metodo retorna True entonces mannda un  update.
+
+Esas son las diferencias entre los metodos HOOK y lifeCicle
+   -> Un Hook siempre van atados siempre a la propiedad 
+   -> El ciclo de vida son metodos atados pero al componente
+
+ESTO ES PARA APRENDERSE PARA EL EXAMEN:
+
+   --> Una propiedad o atributo es creado en el get properties NO EN EL CONSTRUCTOR
+    -->El map generado en los metodos del ciclo de vida se genera una llave valor, donde la 
+   llave es el nombre de la propiedad y su valor es el valor viejo de esa propiedad.
+  -->Si en un constructor no se manda a llamar el metodo super() entonces no funciona nada.
+.

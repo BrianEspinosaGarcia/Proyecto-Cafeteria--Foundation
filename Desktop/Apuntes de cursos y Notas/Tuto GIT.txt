@@ -1,0 +1,75 @@
+Apuntes de GIT
+Diccionario: 
+Ramas ( Branches )
+->->->->->->->->->->->->-< SECCION 1 ><-<-<-<-<- <-<-<-<- <-<-<-<- 
+// Para compartir un arbol o tomar un arbol
+export tree ----- import tree 
+///////////////
+  Nivel 1 Commits 
+Git registra un snapshot de todos los archivos en tu directorio ( como un copy - paste)
+Cada commit que se hace le procede el previo a este, el (*master) apunta al ultimo commit
+
+nivel 2 BRanch Ramas 
+Las ramas son tan livianas que por ello no hay consumo de almacenamiento ni emoria al hacer varias 
+Una rama dice 
+" Quiero incluir el trabajo de este commit y todos sus ancestros"
+/*** Comando ****/
+   .........../git branch nombreNuevaRama/.......
+  Nota :---Esta rama nueva esta apuntando al ultimo commit que hiciste 
+	Pero si le doy un commit esa rama ultima que cree se quedo en el commit previo 	(donde se creo la rama),       no en el ultimo que hice, el *master es el que va al corriente con el commit mas reciente.
+   Para guardar algo y extender la rama que creamos con commits debemos pasarnos a ella con el comando 
+       /****Comando Cambiar Rama *****/
+     .........../git checkout nombreRama/.......
+       Nota: Despues de esto ya puedo hacer commits a esa rama y  IMPORTANT! 
+	  ahora 'master' se quedo en el commit previo y el ultimo commit lleva la rama 
+	seleccionada con "git checkout nombreRama"
+
+Nivel 3 Mergeando(UNIR-FUSIONAR) Ramas ( Unificar el trabajo de dos ramas)
+Esto sirve para implementar una funcionalidad nueva y unirla con el trabajo principal
+   /****Comando Unificar ramas *****/
+	.........../git merge nombreRama(NO APUNTADA )/.......
+
+	Este comando crea un commit especial que tiene dos padres diferentes, lo que se 	traduce a a incluir todo lo de ambos padres y de todos sus ancestros.
+	Por lo tanto al aplicarlo a una rama se une y genera un commit nuevo pero la rama que apunta el commit nuevo es la de su contraparte NOOOO la que se le hizo el 	merge
+	*/Importante, si quiero que la rama tambien pasada (la que fue fusionada apunte 	al ultimo commit, debo meterme a:
+	 checkout ramaNoApuntada;     git merge master
+
+Nivel 4  GIT rebase  ( Otra forma de convinar el codigo )
+Este comando permite tomar un conjunto de commits y los aplica sobre algun otro lado
+VENTAJA  Puede usarse para conseguir una secuencia  de commits lineal 
+----Cuando se aplica el comando hace ver como que los commits no se hicieron en dos ramas, sino en la misma 
+    /****Comando Unificar ramas  2 OPCION *****/
+ .............git rebase nombreRama(NO SELECCIONADA) ....
+	
+	Importante : Cuando aplicamos el comando, el commit une ambas ramas pero 
+	hace desaparecer la distincion de los commits de las ramas, la rama que estaba 	                  seleccionada es la que quedara apuntada al ultimo commit
+	El uso se parece al pasado en cuanto a Sintaxis
+	*/ PAra pasar la rama que se quedo en un commit anterior, se apunta a la que se 	va a mover y se le hace un rebase a la que esta en el ultimo commit
+//**//**///***//**//**//*/**//**///***//***///***//**//*/*/*/*/*/
+SEGUNDA SECCION :
+ HEAD :
+Es el nombre simbolico del commit actualmente checkouteado, el commit sobre el cual estas trabajando.
+Para cambiarme de git debo colocar 
+git checkout NombreCommit pero debo estar en esa rama
+
+MOVERSE ENTRE COMMITS
+ COMANDO:
+          <git log> 
+Muestra los multiples commits hechos
+Para referirme a ellos debo hacer inferencia hacia sus hash que son numeros con letras bastante  grandes que permiten acceder a ellos, pero son largos por lo cual se colocan solo las primeras cuatro letras para identificar el commit
+
+Otra forma de moverse con los commits es con la flecha hacia arriba, o bien una cierta cantidad  asi: ~<num>
+Ejemplo :
+git checkout ~numero
+Ejemplo con flecha ^ 
+si quiero subir de la rama donde estoy al commit pasado es 
+git checkout master ^ ( Si la rama en la que estoy es master*)
+Si quisiera acceder a una que esta dos veces arriba es : 
+git checkout master ^^ (sube dos commits)
+
+HEAD es el ultimo commit referenciado, puedo mover el head asi :
+*) git checkout NombreCommit  (De esa forma el head aparece sobre ese commit )
+*)git checkout HEAD^  (Aqui en lugar de mover la rama muevo el HEAD )
+USO COLECTIVO:
+   => {  git branch -f master HEAD~#  }   => { git branch -f nombreRama nombreCommit } ( mueve la rama con el head un cierto numero  aunque este  en otra rama )
+-f ( Forza mover la rama de forma rapida )REVERTIR CAMBIOS EN GIT GIT RESET:Revierte los cambios moviendo la referencia de una rama hacia atras en el tiempo a un commit anterior, es como Reescribir la historia   (git reset); esta mueve la rama hacia atras como si el commit nunca se hubiera hecho.Ejemplo:         => {   git reset HEAD~1  }GIT REVERT mientras que resetear los cambios funciona genial para ramas localessu metodo de reescribir la historia no funciona para ramas remotasPara revertir cambios y compartir esa revertida con otros necesitamosusar git revertejemplo:  =>  git revert (nombreCommit o Referencia)   Nota debo estar en esa branch en el punto donde hare un revertEn pocas palabras hace un nuevo commit pero ya no con los avances sino como una copia de su antepasado.MOver archivos por doquier:	Git Cherry-pick:Es una manera bastante directa de decir que quieres copiar  una seriede commits sobre tu ubicacion actual(HEAD). Ejemplo:  =>{   git cherry-pick <Commit1> <Commit2> <...> } En mis palabras diria que te posisiconas en una rama y posterior aplicas el comando de git cherry pick seleccionando commits incluso de otra ramasy las añade a la rama en las que estas, es como tomar una parte de documentosque esten en otra rama y agregarlos ahi en la rama en la que estas ubicado.Los commits que quieras añadir, seran señalados por su nombre hashPROBLEMA: Pero es demasiado tedioso saber cual commit buscando de uno en uno que cambios se han realizado asi como sus nombres, por lo cual surge esta alternativa(rebase -i) el cual abre una UI donde muestra los hash comentarios y detalles de cada commit para identificar que queremos.  ~~ CUando se abre la UI podemos ordenar los commits con drop y drag en el mouse     **A cada commit que elija incluir debo agregarle un (pick) de lo contrario se	ignorara.  Ejemplo: git rebase -i HEAD~4Supongase que estamos en una rama, lo que hara el comando es lo siguiente, primero movera hasta la referencia que se mueva cuatro lugares arriba el HEAD, de ese lugarse abrira la interfaz que muestra los commits que hay desde ese punto seleccionado hasta abajolos cuales con la UI podremos seleccionar para saber cual quiero, por lo que ahora una vez seleccionados se saldra como una nueva rama que reescribe a la que teniamos anterior con solo los commits que queriamos Hacer PEqueños cambios sobre un Commit:Imaginemos que el diseñador nos dice una vez que hayamos hecho varios commits de nuestro trabajoque requerimos modificar una pequeña parte como el tamaño de una imagen en uno de los commits pasadospor lo cual nos vemos obligados a movernos en commits, y modificar uno por lo cual se utilizara(commit --amend) para la pequeña modificacion y ver esto con un (rebase -i). De igual forma el rebase -i nos permitira llevar ese commit a la ultima posicion para que quede como ultimo=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>=><=><=><=>GIT REMOTO:git clone:  Es el comando que usare para crear copias locales de un repositorio remoto	    Con esto el directorio en donde estes se copia en un remoto exactamente  igual como 	    en el que estas trabajando.Branchs remotas:Estas branchs funcionan de igual forma que las pasadas locales, pero el nombre de estas surge de <nombre del remoto></ nombre de la rama>ejemplo:  o/master la o significa remoto.  *** La mayoria de los desarrollos le llaman "origin" a su remoto (es tan comun que git crea su	remoto llamandolo origin cuando haves un--git clone--)**EL ORIGIN ES EL REMOTONota : Si me paso al origin y hago un commit se (destachea) es decir sale el HEAD y enconces sihago un commit entonces no se hara sobre la rama sino sobre el HEAD.Extraer datos de un repositoriogit fetch: con este comando podemos traer desde un repositorio remoto datos.	este comando sirve para traer los cambios o commits de una rama remota, posicionandote 	en tu rama local y escribiendo tal comando. Al bajarlos tambien actualiza las ramas 	y las apunta donde sea lo ultimo IMPORTANTE : no por hacerle git fetch en nuestro local se mostraran todos los cambios de el repositorio	remoto, es decir que no se muestra tal cual esta en el remoto, ya que este comando puede descargar 	los datos necesarios para hacerlo, pero no cambia ninguno de mis archivos locales.POR LO TANTO se puede interpretar como un comando de descarga.SOLUCION : Una vez que los commits estan disponibles en mi local podemos implementar otros comandos que nos 	permitan mergear lo que tenemos con lo que acabamos de traer del remoto. (cherrypick o/master -rebase o/master - merge o/master)	**el merge o rebase o cherry-pick  apuntados hacia o/master es por que es la rama que queda apuntada al 	final de los commits por ello se une con ella.Si bien este comando requiere de al menos otro para mostrar la union del remoto con el del local, git nos probee con un comando que hace los dos en unogit pull: este comando es aquel que permite hacer un "git fetch " seguido de un "git merge".(**** para hacer que se hagan commits automaticamente por alguien mas en el tutorial se usa git fakeTeamwork **)git push: Este comando es lo contrario a git pull, mientras que aqui el pull es para extraer los cambios          o commits hechos en el repositorio remoto, este sube los commits o cambios al reposotorio	  remoto, este sube los cambios a un reposotorio especifico y de actualizar ese remoto para	  incluir tus nuevos commits. Cuando git push termina, todos tus amigos pueden descargar tu 	 trabajo.IMPORTANTE ;~~~~~~~Cada que quiera subir mis cambios, debo primero traerme los que estan en el remoto	   por lo tanto debo hacerle un fetch, pero despues debo unirlo con mi repositorio local            el cuAL no tiene los commits de iguAL forma que los ubicados en el remoto, entonces despyes	   deberia hacerle un merge o rebase o cherry pick pARa unirlos con con lo que yo tengo y           posterior debo subir lo que hice, por lo que hay varias formas de hacer eso con  un solo           comando, aqui el ejemplo    git pull: Es el atajo para un fetch  y un merge// Por lo que al hacer un push se hace lo mismo 	      que hice en mi local y se mergea de la misma forma-    git pull --rebase es un atajo para hacer un fetch y rebase y igual que arriba se hace lo mismo               en el  remotogit pull:  es aquel comando que te permite descargar commits y dependiendo de este o su definicion, este es el que 	se juntara con lo tuyo, hace dos comandos a la vez.Importante:  Cuando le damos un git clone a un repositorio este crea un enlace en el que mi repositorio local se enlaza con el remoto por lo que hace que el repositorio donde fue creado mi  (clone) es la que estara al pendiente de cuales cosas se hagan, es decir que sobre ella sera lo que se suba cuando se haga ( git push ) por lo que a veces es convenienteestablecer otras ramas como origen de posible envio de cambios. ( En otras palabras la rama que fue creada con el  git clone ) sera la responsable en reportar cambios o enviarlos al remoto dado que es la unica que puede entregar cambios )Para cambiar la rama que reportara cambios al Origin se hace con los siguient:  =>  local branch "master" set to track remote branch "o/master"  => rama local "master" establecida para trackear la rama remota "o/master"Para asignar la rama que reportara cambios o subira cambios a mi remoto:Hay dos formas de establecer esta propiedad. La primera es checkoutear una nueva rama usando una rama remota como la referencia especificada. Ejecutargit checkout -b absolutamenteNoEsMaster o/masterCrea una nueva rama llamada absolutamenteNoEsMaster y la hace trackear a o/master.

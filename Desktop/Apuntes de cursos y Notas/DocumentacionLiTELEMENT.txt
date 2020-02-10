@@ -1,0 +1,163 @@
+¿Qué es LitElement?
+
+LitElement es una clase base simple para crear componentes web rápidos 
+y livianos que funcionan en cualquier página web con cualquier marco.
+
+LitElement usa lit-html para renderizar en DOM de sombra y agrega API 
+para administrar propiedades y atributos. Las propiedades se observan 
+de forma predeterminada y los elementos se actualizan de forma 
+asíncrona cuando cambian sus propiedades.
+
+Para crear una aplicación con componentes de LitElement, 
+consulte el Kit de inicio de PWA.
+
+Preparar
+
+Necesita npm y Node.js para trabajar con LitElement. 
+Para instalar npm y Node.js, consulte las instrucciones en NodeJS.org.
+
+LitElement utiliza módulos JavaScript para importar 
+dependencias por sus nombres de paquete npm. Dado que los 
+navegadores web necesitan conocer la URL completa de un 
+archivo para importarlo, su servidor de desarrollo local 
+necesita servir rutas de URL completas y transformadas a su navegador web.
+
+Para implementar una compilación optimizada que funcione en 
+sus navegadores de destino, también necesitará un conjunto 
+de herramientas de compilación que pueda manejar esta 
+transformación, junto con cualquier agrupación.
+
+Una opción es Polymer CLI, que incluye un 
+servidor de desarrollo que convierte los nombres de los módulos en 
+rutas sobre la marcha; y una herramienta de compilación configurable 
+que empaqueta su código para su implementación.
+
+Para instalar Polymer CLI con npm:
+
+npm instalar -g polímero-cli
+
+Para servir un proyecto LitElement localmente:
+
+servir polímero
+
+Consulte la documentación de Polymer CLI para obtener más 
+información sobre la configuración de estas herramientas.
+
+Siga leyendo para crear un componente o descargue 
+un proyecto de LitElement de muestra.
+Crear un componente LitElement
+
+Para crear una nueva clase basada en LitElement:
+
+    En su carpeta de proyecto, instale el paquete lit-element de npm:
+
+    npm install lit-element
+
+    Escribe tu nuevo elemento:
+        Importe la clase base LitElement y la función auxiliar html.
+        Cree una nueva clase que amplíe la clase base LitElement.
+        Implemente render para definir una plantilla para su componente web.
+        Registre la etiqueta HTML de su componente con el navegador.
+
+
+////////////////////////////////////////////////////////
+
+Example
+
+my-element.js
+
+// Import the LitElement base class and html helper function
+import { LitElement, html } from 'lit-element';
+
+// Extend the LitElement base class
+class MyElement extends LitElement {
+
+  /**
+   * Implement `render` to define a template for your element.
+   *
+   * You must provide an implementation of `render` for any element
+   * that uses LitElement as a base class.
+   */
+  render(){
+    /**
+     * `render` must return a lit-html `TemplateResult`.
+     *
+     * To create a `TemplateResult`, tag a JavaScript template literal
+     * with the `html` helper function:
+     */
+    return html`
+      <!-- template content -->
+      <p>A paragraph</p>
+    `;
+  }
+}
+// Register the new element with the browser.
+customElements.define('my-element', MyElement);
+
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+Use LitElement TypeScript decorators
+
+You can use the @customElement TypeScript decorator to define your class as a custom element:
+
+/**
+ * Import LitElement base class, html helper function,
+ * and TypeScript decorators
+ **/
+import {
+  LitElement, html, customElement, property
+} from 'lit-element';
+
+/**
+ * Use the customElement decorator to define your class as
+ * a custom element. Registers <my-element> as an HTML tag.
+ */
+@customElement('my-element')
+export class MyElement extends LitElement {
+
+  /**
+   * Create an observed property. Triggers update on change.
+   */
+  @property()
+  foo = 'foo';
+
+  /**
+   * Implement `render` to define a template for your element.
+   */
+  render(){
+    /**
+     * Use JavaScript expressions to include property values in
+     * the element template.
+     */
+    return html`<p>${this.foo}</p>`;
+  }
+}}
+
+}
+
+
+
+
+for (const key in array) {
+       if(key<3){
+        arSe.add(array[0][key]);
+        arSe.add(array[1][key]);
+        arSe.add(array[2][key]);
+            
+       }else if( key>2 && key<6){
+        arSe.add(array[0][key]);
+        arSe.add(array[1][key]);
+        arSe.add(array[2][key]);
+       }
+       else if(key>5 && key<9){
+        arSe.add(array[0][key]);
+        arSe.add(array[1][key]);
+        arSe.add(array[2][key]);
+       }
+    }
+
+
+
+
+

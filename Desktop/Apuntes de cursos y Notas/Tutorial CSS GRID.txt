@@ -1,0 +1,44 @@
+CSS GRID  Tutorial: 
+
+grid-template-columns: Establece los tamaños en porcentaje del espacio qe ocupara 
+cada elemento y el numero de estos, la suma debe de ser de 100;
+    Ejemplo: grid-template-columns: 20% 20% 20% 20% 20%;
+grid-template-rows: Establece el tamaño de las filas horizontales
+    Ejemplo: grid-template-columns: 20% 20% 20% 20% 20%;
+
+ NOTA: Esta definicion se hace del contenedor que abarca todos los elementos, posterior 
+	las siguientes propiedades se hacen sobre otro contenedor o contenedores que 
+	se elije acomodar
+ NOTA: dentro de el valor de las dos propiedades para no escribir todas las propiedades o todos 
+      los valores sean repetidos se ocupa esto : repeat(4, 25%);
+ NOTA: tambien acepta valores como pixeles em etc 
+	ejemplo; grid-template-columns: 100px 3em 40%
+ NOTA: Puedó asignar valores por fracciones con la palabra fr y establecer en cuantas 
+	fracciones se arreglara dinamicamente.
+	ejemplo: 1fr 5fr; // Esto significa que son dos columnas, una de 1fr y otra con 
+	5fr;
+ NOTA: tambien puedo separar o unir las tecnicas colocando especificaciones de columnas 
+	y luego separandolo en fracciones.
+	ejemplo: grid-template-columns: 50px 1fr 1fr 1fr 50px;
+
+grid-column-start: (HORIZONTAL) Define la posicion inicial de un elemento respecto a las 
+columnas de la cuadricula.
+grid-column-end: (HORIZONTAL) Define la posicion final de un elemento con respecto a las 
+columnas de la cuadricula.
+   (>*) grid-column: Es una propiedad abreviada que acepta ambos valores a la vez
+	separado por una diagonal, el primero es 'start', el segundo es 'end'.
+
+grid-row-start: (VERTICAL) funciona de forma semejante a grid-column start pero ahora es en la parte de
+rows
+grid-row-end: (VERTICAL) funciona de forma semejante a grid-column-end pero de forma
+vertical.
+   (>*) grid-row: es la union de row-start y row-end iniciando con start y posterior end.
+
+(<*>)grid-area: Estas dos (>*) uniones se pueden fusionar en esa propiedad donde se enuncian
+las cuatro propiedades que se tiene en la suma de las dos anteriores, deacuerdo a la siguiente
+guia:    grid-row-start / grid-column-start / grid-row-end / grid-column-end 
+
+   NOTA: Es importante considerar que puedo superponer dos areas, obviamente esos contenedores deben
+        deben ser diferentes 
+order: se aplica sobre un elemento en especifico que este sobre el  contenedor padre 
+	para ordenar algo que elijamos de una mejor forma.

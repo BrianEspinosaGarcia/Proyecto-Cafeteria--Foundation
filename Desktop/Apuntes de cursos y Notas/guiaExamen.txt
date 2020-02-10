@@ -1,0 +1,346 @@
+GUÍA DE EXAMEN
+CONCEPTOS
+- Polimorfismo: Se refiere a la posibilidad de acceder a diferentes métodos con comportamiento diferentes dentro de la misma interfaz, dependiendo del contexto.
+- Encapsulamiento: Es la forma de proteger u ocultar las propiedades de un objeto, existen tres niveles de acceso para encapsulamiento: Public, Protected, Private
+- Herencia: Permite rehusar el código de una clase a otra.
+- Clase: Plantilla que describe el comportamiento de los objetos que le implementan.
+- Objeto: Implementación de una clase, tiene acceso a todos los comportamientos de la misma.
+- Constructor: Es el código que construye un nuevo objeto de una determinada clase, se usa la palabra reservada new
+- Qué palabra venía en el prefijo de la clase que hace referencia en Herencia
+Extends
+- ¿Cual de estas oraciones definen herencia?
+La clase empleado tiene subclases Empleado Sindicalizado, Empleado…
+- ¿Cual es el modelo para un objeto?
+Clase
+Diferencia entre una clase y un objeto
+El objeto instancia una clase
+- Que representa la clase en un objeto:
+modelo
+- Es el método que inicializa las propiedades de un objeto
+El constructor
+- Cómo se accede a los elementos privados de una clase
+Encapsulamiento
+- Los detalles internos de una clase pueden ser ocultados del exterior
+Encapsulamiento
+- Dos clases base que heredan métodos y atributos a otra clase
+Herencia Múltiple
+-Súper clase con dos hijos
+Herencia
+- Información coherente y relacionada con la clase:
+alta cohesión ??
+- La alta cohesión con que debe de ir: 
+Bajo acoplamiento
+- ¿Cual de las siguientes define una herencia?
+un padre empleados pasa sus atributos a empleado del mes etc
+- Qué es Polimorfismo: 
+Parámetros sobre un método y cambia su comportamiento
+-La alta cohesión viene acompañada de:
+Bajo acoplamiento
+- Conceptos básicos de Programación Orientada a Objetos:
+Abstracción, polimorfismo, herencia, encapsulamiento
+JAVASCRIPT
+- Que tipo de dato es null
+Objeto
+- Menciona las variables de Javascript
+var, let y const
+- Menciona los tipos de datos en Javascript:
+Number, string, boolean, null, undefined, NaN, Symbol, object
+- ¿Como pasar un String JSON a un Objeto Javascript?
+JSON.parse(stringJSON)
+- ¿Como pasar un objeto javascript a String JSON?
+JSON.stringify(objetoJS)
+- ¿Cómo y cuándo utilizar las variables let y var?
+Cuando queremos limitar el alcance de la variable
+- Afirmaciones, cuál NO es cierta en Javascript:
+poner ; al final de una oración
+- let letras = ["lambda", "alfa", "gamma", "beta"];
+letras.sort(); 
+ordena el arreglo de forma ascendente
+- Resultado de este código document.querySelector(‘p.five’)
+Selecciona el primer elemento párrafo con una clase five
+- Elimina el elemento avión del siguiente arreglo:
+let transportes = ["avion","barco","motocicletas","automovil"];
+transportes.shift();
+- Qué resultado es de esta función:
+function myFuncion(){
+const nombre = “pedro”
+nombre = “juan”
+return nombre
+}
+Uncaught TypeError: Assignment to constant variable.
+<script>
+function f(){
+let x= "4"+4+5;
+let y= 4+4+"5";
+console.log(x + ' '+ y );
+console.log(type of);
+}
+f();
+</script>
+Javascript hace type casting para convertir los tipos a strings, “445” “85”
+- Que resultado da: var square = number => number*number;
+ te daba un número al cuadrado
+- Que retorna la siguiente function
+function f(x, y=2, z=7){
+return x + y + z;
+   }
+console.log(f(1) === 10);
+true
+- function foo(){
+return 5
+}
+let myVar = foo;
+retorna 5
+myVar es igual a 5
+la variable myVar hace referencia a la función
+ - Como agregar un valor al final del arreglo
+arr = ["val1","val2", "val3"];
+arr[arr.length ] = "value"
+arr[arr.length - 1 ] = "value"
+arr[arr.length + 1] = "value"
+arr + “value”
+- Que retorna la siguiente funcion
+function f (){
+var x; var y = x === null;
+console.log(y)
+   } f();
+false
+- Cual es la forma correcta de recorrer un array
+[1,2,3,4,5].forEach(function(i){return i)}
+- ¿Que es lo que hace el siguiente código?
+if(x===y){
+console.log(“hola mundo”);
+}
+Hace la comparación de tipo y valor e imprime “hola mundo”
+- ¿Que retorna? 
+(function f(f){
+return typeof f();
+})(function(){return 1;})
+Number
+- ¿Qué estados regresa tener una promesa?
+Todas
+- ¿Como delimitas la variable dentro del contexto?
+Let
+- ¿Cómo se llaman los métodos de una clase padre en una clase hija?
+Super
+-¿Qué imprime el siguiente código? 
+var a = 3;
+function foo(){
+var a = 2;
+console.log(a);
+}
+function pro(){
+foo();
+}
+pro();
+- 3
+- 2
+- undefined
+-¿Qué imprime lo siguiente?
+var cadena = ['perro', 'gato', 'caballo', 'vaca'];
+cadena.filter((valor) => {
+return valor.length >= 5;
+});
+console.log(cadena);
+['perro', 'gato', 'caballo', 'vaca']
+- ¿Cuáles son las formas de recorrer array en Javascript?
+for, for in, for of, array.forEach
+- ¿De qué forma podemos saber el tipo de una variable en JavaScript?
+Typeof
+-¿Qué métodos maneja una promesa?
+Resolve, reject
+-¿Cómo saber la longitud de un array?
+Length
+- ¿Qué declara lo siguiente?
+var variable = number => number * number;
+Una función que recibe un parámetro y regresa el cuadrado de un número dado.
+- Métodos para mutar un arreglo
+pop, push, shift, splice, unshift
+- ¿Cual es el resultado?
+function getName(){
+const name = 'Jose';
+name = 'Juan';
+return name;
+}
+Respuesta correcta "error" por que la variable name esta declarada como "const"
+-function f(x,y=2, z=7){
+return x + y + z;
+}
+console.log(f(1)=== 10) 
+true
+- ¿que valor obtiene y?
+var x;
+var y = x === null;
+false
+- ¿Que resultado obtenemos?
+let letras = ['Lambda', 'Alfa', 'Gamma', 'Beta']
+letras.sort();
+El arreglo letras se ordena de forma ascendente" ['Alfa', 'Beta', 'Gamma','Lambda']
+- ¿Cual es el resultado?
+function getName(){
+const name = 'Jose';
+name = 'Juan';
+return name;
+}
+“error" por que la variable name esta declarada como "const"
+- function f(foo){
+	return foo && foo*3 || null;
+}
+cuando foo es igual a cero regresa null, de lo contrario resuelve la condicional
+POLYMER
+- Keys no válidas en una declaración polymer:
+_event
+- Observers de qué forma son:
+sincrona
+- Como se pone un listenner a un campo de texto, para saber en que momento se
+on-blur
+- Como se realiza el monitoreo de cambios en las propiedades de un elemento
+molecule, observer
+observer, databinding, computed(regresa valor)
+- Como se llama un observer de dos propiedades:
+Complejo
+- Propiedades virtuales cuyo valor se determina basado en otras propiedades
+Computed
+- Cuales son los tipos de datos válidos en polymer
+number, string, array, object, date, Boolean , Date , Number , String , Array and Object .
+- Como eliminar el valor de un arreglo en Polymer
+this.splice('persons', 2, 1)
+- El tipo de dato que representa un nulo:
+Object
+- De forma declarativa como se hace binding en un atributo de un componente firstName
+<mi-componente first-name=”{{}}” >
+- Como hacer un binding dentro de un elemento input
+{{firstName::input}}
+- Que tipo de bindeo es este: {{}}
+two way
+- Cómo declarar un dom-if, dom-repeat
+<template is=”dom-repeat” items=”[[propPadre]]” as=”algo”>
+</template>
+<template is=”dom-if” if=”[[boolean]]”>
+</template>
+- Que propiedad modifica su valor dependiendo de otros atributos
+computed
+- Sintaxis correcta de un component
+<mi-componente> </mi-componente>
+- Properties mas utilizados
+type, reflectToAtributte, value
+- Que es un custom event y como se dispara 
+this.fire ? version 1 de polymer 
+Es un evento personalizado que se ocupara para la comunicación entre elementos del DOM,se dispara con el elemento.dispatchEvent
+- De un arreglo de personas modificar el 5to elemento
+this.set(‘person.4.lastName’, ‘nuevo valor’ )
+- Que tipo de binding es este [[]]
+one way
+- Dentro de un componente como cambiar el color de texto
+:host {
+var(--var-host-color , blue)
+}
+- Permite uso de la función filter como una de sus propiedades
+Dom-repeat
+- Ciclos de vida de un componente de polymer:
+ConnectCallback, DisconnectCallback, atributeChangedCallback, constructor, ready
+- Que evento se dispara la siguiente línea de código?
+name: {
+type: String,
+notify: true
+}
+this.set(‘name’, ‘’);
+name-changed
+- Cual de estos estados, regresa una promesa
+rejected
+- notifica a polymer del cambio hecho solamente en una propiedad
+this.notifyPath
+- Venía algo de cómo hacer que los estilos sean visibles o aplicables, la verdad no recuerdo tampoco bien las respuestas:
+var(--una-variable-supongo)
+- ¿Cómo se le llama a un observador que puede estár pendiente de dos propiedades?
+Complejo
+- Forma de hacer un binding solo de Polymer a HTML
+[[]]
+- ¿Cómo agregar un listener de forma declarativa?:
+<my-component evento="on-event-listened"> </my-component>
+- ¿Qué hace el siguiente código?
+<dom-repeat items="listas" as="lista">
+<template>
+<dom-if if="[[lista.edad]]">
+	<template>
+console.log(lista.edad);
+</template>
+</dom-if>
+</template>
+</dom-repeat>
+No hace nada porque el dom-repeat está mal hecho
+- ¿En qué ciclo de vida se debe sobreescribir con el método super?
+ En todos los ciclos de vida
+- ¿Cúal acepta la propiedad filter?
+Dom-repeat
+- Si notify = True
+static get properties() {
+return {
+hasCoffee: {
+type: Boolean,
+value: false,
+notify: true 
+}
+};
+}
+has-coffee-changed
+//así se llama el evento que crea automaticamente para notificar cambios en la propiedad
+//nombre-propiedad-changed, el guíon y la palabra changed son obligatorias
+- static get properties() {
+return {
+detailAccount: {
+type: Object,
+value: 'label',
+reflectToAttribute: true //si reflectToAttribute es true
+}
+};
+}
+detail-account // la propiedad se muestra como un atributo HTML con notación dash-case (Palabra clave HTML)
+CONCEPTOS EXTRA
+Métodos transformadores (Modifican la matriz unidimensional original)
+pop( ) Elimina el ultimo elemento del array y retorna este elementos
+push( ) Añade 1 o más elementos y retorna la nueva longitud de la matriz
+reverse( ) Invierte el orden de los elemntos de un array
+shift( ) Elimina el primer elemento de la matriz y retorna este valor
+splice( ) Añade y/o elimina elementos de una matriz
+unshift( ) Añade uno o mas elementos al comienzo de un array y retorna la nueva longitud
+Métodos accesores (No modifican la matriz original y retornan alguna representación de la matriz)
+concat( ) Retorna un array resultado de la union de otros arrays de distintas dimensiones y valores
+var array1 = ['a', 'b', 'c'];
+ var array2 = ['d', 'e', 'f'];
+ 
+ console.log(array1.concat(array2));
+ // expected output: Array ["a", "b", "c", "d", "e", "f"]
+join( ) Une todos los elementos de una matriz en una cadena
+var elements = ['Fire', 'Air', 'Water'];
+ 
+ console.log(elements.join());
+ // expected output: "Fire,Air,Water"
+ 
+ console.log(elements.join(''));
+ // expected output: "FireAirWater"
+ 
+ console.log(elements.join('-'));
+ // expected output: "Fire-Air-Water"
+slice( ) Extraen una sección del array y lo retornan en otro array
+var nombres = ['Rita', 'Pedro', 'Miguel', 'Ana', 'Vanesa'];
+var masculinos = nombres.slice(1, 3);
+// masculinos contiene ['Pedro','Miguel']
+toSource( )
+toString( ) Retorna un String representando el array
+var array1 = [1, 2, 'a', '1a'];
+ console.log(array1.toString());
+ // expected output: "1,2,a,1a"
+indexOf( ) devuelve el primer indice que encuentra para el elemento especificado o -1 si no se encuentra dentro del array
+var array = [2, 9, 9];
+array.indexOf(2); // 0
+array.indexOf(7); // -1
+array.indexOf(9, 2); // 2
+array.indexOf(2, -1); // -1
+array.indexOf(2, -3); // 0
+lastIndexOf( ) devuelve el ultimo indice que encuentra para el ultimo elemento especificado o -1 si no se encuentra dentro del array
+var animals = ['Dodo', 'Tiger', 'Penguin', 'Dodo'];
+ 
+ console.log(animals.lastIndexOf('Dodo'));// expected output: 3
+ 
+ console.log(animals.lastIndexOf('Tiger')); // expected output: 1

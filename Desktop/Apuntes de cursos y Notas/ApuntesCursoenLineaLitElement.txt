@@ -1,0 +1,122 @@
+APuntes del curso 
+
+ ¿? Checar si no meto en mi [  static get properties() ] una variable y ver si se actualiza con cualquier cambio 
+
+
+*}* SI no se define una propiedad en un constructor  y le inicializo el valor como atributo al usar la 
+   etiqueta generada,  si se muestra en pantalla lo que asigne desde la creacion de su etiqueta 
+
+
+*] NOTA IMPORTANTE: si quiero seleccionar algo entro a inspeccionar elementos, luego le doy en  seleccionar elemento
+y luego le doy  consola y presiono una vez haya sido seleccionado [ $0 ] y me manda lo que estoy pero ya con referencia
+de seleccion del elemento.
+
+*] En el contructor no tengo por que inicializar todas, solo las que necesite pero debo ver si al momento de crear mi 
+etiqueta en el dom, las inicializa y como lo hace  o no, por que de lo contrario ver si se pintan o no
+
+*] El constructor siempre debe de llevar un super si es que se coloca el constructor.
+
+*]  5587802694  edo mex 5616942614 NUMERO DE AIRPODS
+
+*] Instalar webpack 
+  npm install -D  webpack webpack-cli( Herrramienta de desarrollo solamente )
+entramos a la parte de scripts y agregamos el siguiente:
+ "build": "webpack --node production"
+
+para que despues lo corra sea : 
+ npm run build
+ asi como que ahora solo importo un archivo que ya no sea de tipo modulo y agregar el main 
+generado dentro de la carpeta de webpack
+
+*] Cuando ocupo [ shadowRoot ] cuando me dirijo a la raiz del componente donde me estoy dirigiendo, por lo cual  
+g   se ocupa cuando estoy seleccionando algo desde un componente que se esta renderizando dentro  dell 
+  componente  referido en un inicio con [ shadowRoot ]
+
+Plantillas :
+
+ *] Definir una plantilla es con el metodo render ()  y colocar template.
+
+*] MEtodo render() 
+   El metodo solo depende de las propiedades que hayan sido declaradas ( que esten en el get properties() )
+--->No cambia el estado del componente
+-->No hace efectos colaterales.
+
+
+****] De examen  Si declare una propiedad en get properties pero no le asigno ningun valor entonces la propiedad 
+       nace como  [  undefined ]
+
+*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=*/(=
+*]VIDEO DE ESTILOS A UN COMPONENTE:
+  Usando el metodo de *] static get styles () permite renderizar elementos pero crea estilos para el elemento
+   PEro el crearlo en este metodo permite la optimizacion de los estilos y lo optimiza, aumentando el 
+  rendimiento.
+
+*] La forma de escuchar un evento desde el DOM [ SIN COLOCAR BUBLES ] es seleccionar el componente de 
+donde esta saliendo el evento y agregarle un eventListener que escuche el nombre del evento, ya que ese solo 
+lo escucha  por que solo ahi vive ese evento.
+   ****** PEro si quiero que se escuche el evento en todo el documento o DOM, entonces debo de 
+              agregar el atributo buubles de forma manual y ponerlo en true desde el dispatch event
+              y asi cualquier  evento lo escuchara el DOM dessde cualquier componente ya sea este inmerso o no en el
+*] LA forma de hacer bubles manualmente es escuchar un evento dentro de una etiqueta que contega otra 
+   y escuchar su evento y luego enviarlo mediante otro evento para ir subiendo escalera por escalera.
+
+
+/()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()//()/
+*]   A partir de aqui son aclaraciones de dudas y ver que sucede en varios casos que tenia duda del examen 
+    otras cosas estan en el block de notas.
+*] Encontrar la ruta dentro de una lista para saber quien manda el evento.
+*] Crear un elemento en el DOM 
+*] Dar estilos a un SLot
+*] *****Burbujuear los estilos a un Componente.****
+*] Conectar dos componentes.
+*] Conteo de clicks en varios casos.
+*] Checar cuando si y cuando no se asignan o reasignan nuevos valores.
+*] Condiciones ternarias para agregar clases  definidas por mi .
+*] Crear un createRenderRoot();
+
+
+
+
+
+CASOISTICAS DE PROPIEDADES:
+
+
+ Cuando defino una propiedad  en el get properties pero no en el constructor y la muestro en el render, entonces 
+simplemente no se muestra nada aunque si lo coloco en consola no muestra nada 
+
+*] Si meto dentro de un div una funcion y la coloco sin parentesis entonces la interpreta como texto plano.
+
+*] Cada que yo quiera ejecutar una funcion una sola vez sobre cualquier cosa, entonces debo  colocarle ();
+
+*] El valor de una propiedad si se muestra aunque no este en el contructor pero debe ser asignado un valor previo a 
+donde se muestra
+
+
+~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%
+    VIDEO DE EVENTOS Y CICLO DE VIDA
+
+*] Capitulo de Eventos, cuando no encuentro el ( * this * ) al que en verdad quiero 
+   referirme, entonces lo que debo de hacer es ocupar el metodo [ *.bind( this ) * ]
+    el cual me permite referir ese this al entorno que yo quiero y no al this de la 
+    funcion, por lo que es una alternativa cuando una funcion => no inserta el concepto
+    adecuado a el uso de this.
+    Como ejemplo:
+    this.metodo.bind( this );
+
+*] Si quiero agregar un evento a mi constructor esto se refiere a que estara escuchando un evento 
+   en toda la etiqueta o bien en todo el render, asi como su proyeccion al DOM, por lo que eso indica
+  que el evento se estara escuchando las veces que sean que tengan que ver con el componente.
+
+*] .stopPropagation();
+  Es un metodo de JS pero que esta en los eventos, es lo contrario a burbujear un evento, en el cual 
+  evita que el evento suba a elementos padres.
+
+*] DISPARAR UN NUEVO EVENTO CUSTOMIZADO
+   El disparar un evento customizado, como bien se sabe es :
+   this.dispatchEvent ( new CustomEvent( 'nombre-evento', {
+     detail: (Cualquier tipo de dato o informacion a enviar),
+     
+   }))
+
+~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%~*%
+

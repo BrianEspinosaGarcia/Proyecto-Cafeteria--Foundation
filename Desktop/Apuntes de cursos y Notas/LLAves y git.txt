@@ -1,0 +1,9 @@
+Para generar las llaves SSH publica y privada se hace con el siguiente comando 
+ssh-keygen
+posterior debo acceder con cat y la direccion de la llave publica que me muestra la ruta de donde se encuentra
+accedo a mi carpetA  donde tendre las cosas
+si quiero agregar o checar donde o que repositorio estoy le doy con git remote -v
+checo  que archivos hay que pueda agregar con git status  
+luego git add . 
+git commit 
+git push origin master
